@@ -3,6 +3,7 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [midje "1.6.0"]
                  [ring "1.2.1"]
+                 [ring/ring-json "0.2.0"]
                  [compojure "1.1.6"]
                  [liberator "0.10.0"]
                  [hiccup "1.0.4"]
