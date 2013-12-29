@@ -13,8 +13,9 @@
        (resources/thing id))
 
   (GET "/" [] (pages/index))
+  (route/resources "/")
   (route/not-found {:status 404 :body "nothing to see here, move along"})
-  (route/resources "/"))
+)
 
 (def app
   (-> (handler/api app-routes)

@@ -5,6 +5,9 @@
 (defn index []
   (h/html (html5 [:h1 "Rest sample"]
                  [:article
-                  [:a {:href "things"} "Show all things"]]
+                  [:a {:href "index.html"} "Angular.js app"]]
                  [:article
-                  [:a {:href "healthcheck"} "health check"]])))
+                  [:a {:href "things"} "Show all things (json)"]]
+                 [:article
+                  [:a {:href "healthcheck"} "health check (json)"]])))
+
