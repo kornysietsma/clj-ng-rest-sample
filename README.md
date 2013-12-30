@@ -22,4 +22,13 @@ The single index.html is just for simplicity - you could template this up with o
 sample only has one (real) page, using one html page is easy.  Need to fix this if you want login forms or
 nice 404 pages or similar.
 
+## libraries/frameworks used
+
+Clojure uses compojure for routing, liberator for REST, Midje for tests
+
+Hiccup is included for html templating, but not really used - the main page is just static html for now.
+
+Web side uses the Kraken framework for a relatively lightweight css framework, Angular.js for all the work.
+
+
 
