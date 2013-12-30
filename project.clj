@@ -17,11 +17,19 @@
   ;;  component or graph or something
 
   :plugins [[lein-ring "0.8.2"]
-            [lein-midje "3.1.1"]]
+            [lein-midje "3.1.1"]
+            [lein-haml-sass "0.2.7-SNAPSHOT"]]
 
   :ring {:handler rs.web/app
          :init rs.web/init
          :destroy rs.web/destroy }
+
+  :scss {:src "resources/scss"
+         :output-directory "resources/public/css"
+         :output-extension "css"
+         }
+
+  :hooks [leiningen.scss]
 
   :profiles {:dev {:dependencies [[slamhound "1.5.0"]]}})
   

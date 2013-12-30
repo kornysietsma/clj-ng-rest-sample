@@ -16,3 +16,10 @@ You need mongodb installed and running on the default port.
 
 `lein midje` will run tests, once I have tests.
 
+## notes
+
+The single index.html is just for simplicity - you could template this up with one of many tools, but as my
+sample only has one (real) page, using one html page is easy.  Need to fix this if you want login forms or
+nice 404 pages or similar.
+
+

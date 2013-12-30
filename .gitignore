@@ -4,5 +4,7 @@ target/
 .lein-repl-history
 .lein-env
 .nrepl-port
+.ruby-version
+.sass-cache
 *.iml
 .idea/
