@@ -1,14 +1,15 @@
 (ns rs.repository
   (:import (org.bson.types ObjectId))
   (:require [rs.config :refer [cfg]]
-            [monger.core :as mg]
-            [monger.collection :as mc]
-            [monger.conversion :refer [to-object-id]]
-            [monger.json]
-            [monger.joda-time]))
+            [somnium.congomongo :as m]))
 
-(mg/connect! (cfg :mongo))
-(mg/use-db! (cfg :db))
+(def conn
+  (m/make-connection (cfg :mongo :db)
+                     :host (cfg :mongo :host)
+                     :port (cfg :mongo :port)))
+
+(defn- to-object-id [s] (ObjectId. s))
+(defn- from-object-id [o] (.toString o))
 
 (defn- to-db "convert map to mongo representation with object id"
   [m]
@@ -21,32 +22,37 @@
   [m]
   (let [id (:_id m)]
     (if id
-      (assoc m :_id (str id))
+      (assoc m :_id (from-object-id id))
       m)))
 
-(defn things  "list all matching things"
+(defn things "list all matching things"
   ([] (things {}))
-  ([query] (map from-db (mc/find-maps "things" query))))
+  ([query] (map from-db
+                   (m/with-mongo conn
+                     (m/fetch :things :where query)))))
 
-(defn thing  "get a single thing"
+(defn thing "get a single thing"
   [id]
-  (->> id
-       to-object-id
-       (mc/find-map-by-id "things")
-       from-db))
+  (m/with-mongo conn
+    (->> id
+         to-object-id
+         (m/fetch-by-id :things)
+         from-db)))
 
 (defn create-thing [t]
-  (->> t
-       to-db
-       (mc/insert-and-return "things")
-       from-db))
+  (m/with-mongo conn
+    (->> t
+         to-db
+         (m/insert! :things)
+         from-db)))
 
-(defn update-thing [t]
-  ; NOTE: save-and-return is a little unsafe as it creates data if id not found
-  (->> t
-       to-db
-       (mc/save-and-return "things")
-       from-db))
+(defn update-thing [new-t]
+  (m/with-mongo conn
+    (let [id (to-object-id (:_id new-t))]
+      (->> new-t
+           to-db
+           (m/fetch-and-modify :things {:_id id})
+           from-db))))
 
 
 

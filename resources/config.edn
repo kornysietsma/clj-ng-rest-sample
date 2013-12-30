@@ -1,2 +1,3 @@
-{:mongo { :host "localhost", :port 27017 }
- :db "rest-sample"}
+{
+  :mongo { :db "rest-sample" :host "localhost", :port 27017 }
+}

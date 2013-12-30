@@ -9,7 +9,8 @@
                  [hiccup "1.0.4"]
                  [cheshire "5.3.0"]
                  [clj-time "0.6.0"]
-                 [com.novemberain/monger "1.7.0-beta1"]]
+                 [congomongo "0.4.1"]
+                 [com.stuartsierra/component "0.2.1"]]
 
   :plugins [[lein-ring "0.8.2"]
             [lein-midje "3.1.1"]
