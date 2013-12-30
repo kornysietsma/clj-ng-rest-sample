@@ -1,5 +1,5 @@
-(defproject rest-sample "0.0.1-SNAPSHOT"
-  :description "sample REST api for templatization"
+(defproject clj-ng-rest-sample "0.0.1-SNAPSHOT"
+  :description "sample clojure REST api with angular front end"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [midje "1.6.0"]
                  [ring "1.2.1"]
@@ -10,11 +10,6 @@
                  [cheshire "5.3.0"]
                  [clj-time "0.6.0"]
                  [com.novemberain/monger "1.7.0-beta1"]]
-  ;; also need:
-  ;;  config
-  ;;  logging
-  ;;  schema?
-  ;;  component or graph or something
 
   :plugins [[lein-ring "0.8.2"]
             [lein-midje "3.1.1"]
@@ -26,8 +21,7 @@
 
   :scss {:src "resources/scss"
          :output-directory "resources/public/css"
-         :output-extension "css"
-         }
+         :output-extension "css"}
 
   :hooks [leiningen.scss]
 
