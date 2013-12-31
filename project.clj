@@ -24,7 +24,9 @@
          :output-directory "resources/public/css"
          :output-extension "css"}
 
-  :hooks [leiningen.scss]
+  ; TODO - re-enable hooks if/when we can get the scss compiler to be less noisy
+  ;:hooks [leiningen.scss]
 
-  :profiles {:dev {:dependencies [[slamhound "1.5.0"]]}})
+  :profiles {:dev {:dependencies [[slamhound "1.5.0"]
+                                  [ring-mock "0.1.5"]]}})
   
