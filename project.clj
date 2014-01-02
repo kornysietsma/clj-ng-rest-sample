@@ -27,6 +27,8 @@
   ; TODO - re-enable hooks if/when we can get the scss compiler to be less noisy
   ;:hooks [leiningen.scss]
 
+  :test-paths ["test/server"]
+
   :profiles {:dev {:dependencies [[slamhound "1.5.0"]
                                   [ring-mock "0.1.5"]]}})
   
