@@ -1,4 +1,4 @@
-(ns rs.t-repository
+(ns unit.rs.t-repository
   (:require [midje.sweet :refer :all]
             [somnium.congomongo :as m]
             [rs.repository :as subject])
@@ -7,7 +7,7 @@
 (def thing-id (ObjectId/get))
 (def thing-id-str (.toString thing-id))
 
-(facts :unit "about the thing repository"
+(facts "about the thing repository"
   (against-background
     (m/make-connection anything) => irrelevant
     (m/connection? anything) => true)

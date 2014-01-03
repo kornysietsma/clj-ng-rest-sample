@@ -14,7 +14,15 @@ You need mongodb installed and running on the default port.
 
 `lein ring server` will run a server.
 
-`lein midje` will run tests, once I have tests.
+`lein midje` will run all tests
+Note by default this includes the end to end tests.
+
+There are aliases for unit tests:
+`lein unit`
+and integration:
+`lein integration`
+
+see the aliases in project.clj to see how these work.
 
 ## notes
 
@@ -29,6 +37,4 @@ Clojure uses compojure for routing, liberator for REST, Midje for tests
 Hiccup is included for html templating, but not really used - the main page is just static html for now.
 
 Web side uses the Kraken framework for a relatively lightweight css framework, Angular.js for all the work.
-
-
 
