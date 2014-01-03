@@ -5,14 +5,12 @@
             [ring.adapter.jetty :as jetty]))
 
 (def server (atom nil))
+
 (defn start-server []
   (when @server
     (throw (Exception. "Server started twice!")))
   (web/init)
   (reset! server (jetty/run-jetty web/app {:port 3001 :join? false})))
-
-(defn needs-server []
-  (when-not @server (start-server)))
 
 (defn stop-server []
   (when-not @server
@@ -22,9 +20,11 @@
   (reset! server nil))
 
 (fact "can view all the things"
-  (needs-server)
-  (taxi/set-driver! {:browser :firefox} "http://localhost:3001/index.html")
-  ;(taxi/to "http://localhost:3001/index.html")
+  (start-server)
+  ; clj-webdriver taxi lives around a global browser
+  ; TODO: maybe use core webdriver so we can be a bit cleaner?
+  (taxi/set-driver! {:browser :firefox})
+  (taxi/to "http://localhost:3001/index.html")
   (taxi/text "section>h1") => "Things!"
   (taxi/close)
   (stop-server))
