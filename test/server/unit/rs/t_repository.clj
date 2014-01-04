@@ -19,5 +19,4 @@
     => {:_id thing-id-str :foo "bar"}
     (provided
       (m/fetch-by-id :things thing-id)
-      => {:_id thing-id :foo "bar"}))
-  )
+      => {:_id thing-id :foo "bar"})))

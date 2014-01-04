@@ -32,7 +32,9 @@ To start a repl `lein repl`
 to load the magic reloading workflow stuff: `(require 'rs.user)`
 to start the system: `(rs.user/go)`
 to stop the system: `(rs.user/stop)`
-to reload: sadly, this isn't working right now, you can run `(rs.user/reset)` but it will try to run all the tests!
+to reload: `(rs.user/reset)`
+
+Something is still broken running midje tests in the repl, but reset works now.
 
 ## other notes
 

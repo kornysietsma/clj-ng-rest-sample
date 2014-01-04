@@ -2,7 +2,7 @@
 
 * Bug-like things:
 ** fix lein-ring so users can run 'normally' and we can generate war files
-** fix rs.user/reset so it doesn't run all the tests!
+** fix loading midje tests in the repl - somehow fixing ns reloading broke this.
 * Generic:
 ** more info in the readme
 * Moar angular:
