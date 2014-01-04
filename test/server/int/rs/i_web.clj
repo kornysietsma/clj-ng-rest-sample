@@ -10,7 +10,7 @@
 
 (facts "regarding the web api"
   (fact "you can get a health check"
-    (web/app (mock/request :get "/healthcheck"))
+    ((web/app :stub-domain) (mock/request :get "/healthcheck"))
     => (contains {:status 200
                   :body (is-json-str {"status" "ok"})})))
 

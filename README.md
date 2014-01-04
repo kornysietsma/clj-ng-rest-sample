@@ -9,10 +9,13 @@ This is opinionated, and (of course) rushed - there are probably better ways to 
 my memories of previous projects, but I'm trying to avoid copying anything directly from other code, to respect
 client IP, and also as things have generally moved on since the client code was written!
 
+NOTE: this (as of version 0.1.0) uses Stuart Sierra's component library for dependency management
+you probably want to read https://github.com/stuartsierra/component for it to make sense
+
 ## running stuff
 You need mongodb installed and running on the default port.
 
-`lein ring server` will run a server.
+`lein run` will run on the default port (3000) - open http://localhost:3000 to see the app.
 
 `lein midje` will run all tests
 Note by default this includes the end to end tests.
@@ -24,7 +27,14 @@ and integration:
 
 see the aliases in project.clj to see how these work.
 
-## notes
+## REPL-based development
+To start a repl `lein repl`
+to load the magic reloading workflow stuff: `(require 'rs.user)`
+to start the system: `(rs.user/go)`
+to stop the system: `(rs.user/stop)`
+to reload: sadly, this isn't working right now, you can run `(rs.user/reset)` but it will try to run all the tests!
+
+## other notes
 
 The single index.html is just for simplicity - you could template this up with one of many tools, but as my
 sample only has one (real) page, using one html page is easy.  Need to fix this if you want login forms or
@@ -32,7 +42,9 @@ nice 404 pages or similar.
 
 ## libraries/frameworks used
 
-Clojure uses compojure for routing, liberator for REST, Midje for tests
+The API uses compojure for routing, liberator for REST, Midje for tests
+
+Stuart Sierra's component library is used for dependency and lifecycle management: https://github.com/stuartsierra/component
 
 Hiccup is included for html templating, but not really used - the main page is just static html for now.
 

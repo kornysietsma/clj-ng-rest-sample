@@ -4,25 +4,39 @@
             [compojure.route :as route]
             [ring.middleware.json :as json]
             [rs.resources :as resources]
-            [rs.pages :as pages]))
+            [rs.pages :as pages]
+            [ring.adapter.jetty :as jetty]
+            [com.stuartsierra.component :as component]))
 
-(defroutes app-routes
-  (GET "/healthcheck" [] resources/healthcheck)
-  (ANY "/things" [] resources/things)
-  (ANY ["/thing/:id", :id #".+"] [id]
-       (resources/thing id))
+(defn parameterised-routes [domain]
+  (defroutes app-routes
+             (GET "/healthcheck" [] (resources/healthcheck domain))
+             (ANY "/things" [] (resources/things domain))
+             (ANY ["/thing/:id", :id #".+"] [id]
+                  (resources/thing domain id))
 
-  (GET "/" [] (pages/index))
-  (route/resources "/")
-  (route/not-found {:status 404 :body "nothing to see here, move along"})
-)
+             (GET "/" [] (pages/index))
+             (route/resources "/")
+             (route/not-found {:status 404 :body "nothing to see here, move along"})
+             ))
 
-(def app
-  (-> (handler/api app-routes)
+(defn app [domain]
+  (-> (handler/api (parameterised-routes domain))
       (json/wrap-json-body {:keywords? true})))
 
-(defn init []
-  (println "Starting server"))
+(defrecord WebServer [host port domain]
+  component/Lifecycle
 
-(defn destroy []
-  (println "Stopping server"))
+  (start [this]
+    (println "--> Starting WebServer")
+    (assoc this :server (jetty/run-jetty (app domain) {:host host :port port :join? false})))
+
+  (stop [this]
+    (println "--> Stopping WebServer")
+    (.stop (:server this))
+    this))
+
+(defn web-server [host port]
+  (map->WebServer {:host host :port port}))
+
+

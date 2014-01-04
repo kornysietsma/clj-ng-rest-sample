@@ -1,30 +1,36 @@
 (ns e2e.end-to-end
   (:require [clj-webdriver.taxi :as taxi]
             [midje.sweet :refer :all]
-            [rs.web :as web]
-            [ring.adapter.jetty :as jetty]))
+            [rs.system :as system]
+            [ring.adapter.jetty :as jetty]
+            [com.stuartsierra.component :as component]))
 
-(def server (atom nil))
+(def system (atom nil))
 
-(defn start-server []
-  (when @server
-    (throw (Exception. "Server started twice!")))
-  (web/init)
-  (reset! server (jetty/run-jetty web/app {:port 3001 :join? false})))
+(def e2e-config
+  {
+    :webserver {:host "localhost" :port 3001}
+    :mongo     {:db "rest-sample" :host "localhost", :port 27017}})
 
-(defn stop-server []
-  (when-not @server
-    (throw (Exception. "Server stopped when not started!")))
-  (.stop @server)
-  (web/destroy)
-  (reset! server nil))
+(defn start-system []
+  (when @system
+    (throw (Exception. "System started twice!")))
+  (reset! system (system/system e2e-config))
+  (swap! system component/start))
+
+(defn stop-system []
+  (when-not @system
+    (throw (Exception. "System stopped when not started!")))
+  (swap! system component/stop)
+  (reset! system nil)) ; TODO: can we remove the nil value and checks?
 
 (fact "can view all the things"
-  (start-server)
-  ; clj-webdriver taxi lives around a global browser
-  ; TODO: maybe use core webdriver so we can be a bit cleaner?
-  (taxi/set-driver! {:browser :firefox})
-  (taxi/to "http://localhost:3001/index.html")
-  (taxi/text "section>h1") => "Things!"
-  (taxi/close)
-  (stop-server))
+      (start-system)
+      ; clj-webdriver taxi lives around a global browser
+      ; TODO: maybe use core webdriver so we can be a bit cleaner?
+      (taxi/set-driver! {:browser :firefox})
+      (taxi/to "http://localhost:3001/index.html")
+      (taxi/text "section>h1") => "Things!"
+      ; TODO: actually set up data and test the output!!!
+      (taxi/close)
+      (stop-system))

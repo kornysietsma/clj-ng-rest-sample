@@ -1,3 +1,4 @@
 {
+  :webserver { :host "localhost" :port 3000 }
   :mongo { :db "rest-sample" :host "localhost", :port 27017 }
 }

@@ -1,5 +1,8 @@
 # Things I mean to do, in no particular order.
 
+* Bug-like things:
+** fix lein-ring so users can run 'normally' and we can generate war files
+** fix rs.user/reset so it doesn't run all the tests!
 * Generic:
 ** more info in the readme
 * Moar angular:
@@ -11,8 +14,6 @@
 * more server side stuff:
 ** logging
 ** better config
-** a domain namespace wrapping the repository
-** some sort of lightweight DI?
 ** look at DropWizard for things that might be useful
 ** authentication/authorization
 ** liberator error handling
