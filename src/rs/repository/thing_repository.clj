@@ -1,21 +1,6 @@
-(ns rs.repository
+(ns rs.repository.thing-repository
   (:import (org.bson.types ObjectId))
-  (:require [somnium.congomongo :as m]
-            [com.stuartsierra.component :as component]))
-
-(defrecord Repository [host port db connection]
-  component/Lifecycle
-  (start [this]
-    (println "--> starting db connection")
-    (let [conn (m/make-connection db :host host :port port)]
-      (assoc this :connection conn)))
-  (stop [this]
-    (println "--> stopping db connection")
-    (m/close-connection (:connection this))
-    this))
-
-(defn new-repository [host port db]
-  (map->Repository {:host host :port port :db db}))
+  (:require [somnium.congomongo :as m]))
 
 (defn- to-object-id [s] (ObjectId. s))
 (defn- from-object-id [o] (.toString o))
@@ -35,29 +20,29 @@
       m)))
 
 (defn things "list all matching things"
-  ([repo] (things repo {}))
-  ([repo query]
-   (m/with-mongo (:connection repo)
+  ([db] (things db {}))
+  ([db query]
+   (m/with-mongo (:connection db)
                  (map from-db
                       (m/fetch :things :where query)))))
 
 (defn thing "get a single thing"
-  [repo id]
-  (m/with-mongo (:connection repo)
+  [db id]
+  (m/with-mongo (:connection db)
                 (->> id
                      to-object-id
                      (m/fetch-by-id :things)
                      from-db)))
 
-(defn create-thing [repo t]
-  (m/with-mongo (:connection repo)
+(defn create-thing [db t]
+  (m/with-mongo (:connection db)
                 (->> t
                      to-db
                      (m/insert! :things)
                      from-db)))
 
-(defn update-thing [repo new-t]
-  (m/with-mongo (:connection repo)
+(defn update-thing [db new-t]
+  (m/with-mongo (:connection db)
                 (let [id (to-object-id (:_id new-t))]
                   (->> new-t
                        to-db

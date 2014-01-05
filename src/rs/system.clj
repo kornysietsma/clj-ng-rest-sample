@@ -1,14 +1,14 @@
 (ns rs.system
   (:require
-    [rs.repository]
-    [rs.domain]
+    [rs.repository.database :as database]
+    [rs.domain.domain :as domain]
     [rs.web]
     [rs.config :as config]
     [com.stuartsierra.component :as component]))
 
-(def system-components [:webserver :repository :domain])
+(def system-components [:webserver :database :domain])
 
-(defrecord RestSystem [webserver repository domain]
+(defrecord RestSystem [webserver database domain]
   component/Lifecycle
   (start [this]
     (component/start-system this system-components))
@@ -19,10 +19,10 @@
   (let [{{ws-host :host ws-port :port} :webserver
          {m-host :host m-port :port m-db :db} :mongo} conf]
     (map->RestSystem
-      {:repository (rs.repository/new-repository m-host m-port m-db)
+      {:database (database/new-database m-host m-port m-db)
        :domain (component/using
-                  (rs.domain/new-domain conf)
-                  [:repository])
+                  (domain/new-domain conf)
+                  [:database])
        :webserver (component/using
                     (rs.web/web-server ws-host ws-port)
                     [:domain])})))

@@ -1,7 +1,7 @@
 (ns unit.rs.t-repository
   (:require [midje.sweet :refer :all]
             [somnium.congomongo :as m]
-            [rs.repository :as subject])
+            [rs.repository.thing-repository :as subject])
   (:import (org.bson.types ObjectId)))
 
 (def thing-id (ObjectId/get))
