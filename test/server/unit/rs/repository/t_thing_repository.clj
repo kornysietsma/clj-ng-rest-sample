@@ -7,7 +7,7 @@
 (def thing-id (ObjectId/get))
 (def thing-id-str (.toString thing-id))
 
-(def stub-repo {:connection :stub-conn})
+(def stub-repo (subject/->ThingRepository {:connection :stub-conn}))
 
 (facts "about the thing repository"
   (against-background

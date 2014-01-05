@@ -2,7 +2,7 @@
   (:require [somnium.congomongo :as m]
             [com.stuartsierra.component :as component]))
 
-; technically a database connection - and a bit of a clash with Mongo's "database" - but this will do
+; really just handles lifecycle, and holds a db connection
 (defrecord Database [host port db connection]
   component/Lifecycle
   (start [this]

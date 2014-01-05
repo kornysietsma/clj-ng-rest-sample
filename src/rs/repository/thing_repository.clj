@@ -19,35 +19,46 @@
       (assoc m :_id (from-object-id id))
       m)))
 
-(defn things "list all matching things"
-  ([db] (things db {}))
-  ([db query]
-   (m/with-mongo (:connection db)
-                 (map from-db
-                      (m/fetch :things :where query)))))
+(defprotocol ThingRepositoryProtocol
+  (things [this] [this query] "all the things")
+  (thing [this id] "a single thing")
+  (create-thing [this t] "create a thing")
+  (update-thing [this new-t] "update a thing"))
 
-(defn thing "get a single thing"
-  [db id]
-  (m/with-mongo (:connection db)
-                (->> id
-                     to-object-id
-                     (m/fetch-by-id :things)
-                     from-db)))
+(defrecord ThingRepository [database]
+  ThingRepositoryProtocol
+  (things
+    [this] (things this {}))
+  (things
+    [this query]
+    (m/with-mongo (:connection database)
+                  (map from-db
+                       (m/fetch :things :where query))))
 
-(defn create-thing [db t]
-  (m/with-mongo (:connection db)
-                (->> t
-                     to-db
-                     (m/insert! :things)
-                     from-db)))
+  (thing
+    [this id]
+    (m/with-mongo (:connection database)
+                  (->> id
+                       to-object-id
+                       (m/fetch-by-id :things)
+                       from-db)))
 
-(defn update-thing [db new-t]
-  (m/with-mongo (:connection db)
-                (let [id (to-object-id (:_id new-t))]
-                  (->> new-t
+  (create-thing [this t]
+    (m/with-mongo (:connection database)
+                  (->> t
                        to-db
-                       (m/fetch-and-modify :things {:_id id})
-                       from-db))))
+                       (m/insert! :things)
+                       from-db)))
 
+  (update-thing [this new-t]
+    (m/with-mongo (:connection database)
+                  (let [id (to-object-id (:_id new-t))]
+                    (->> new-t
+                         to-db
+                         (m/fetch-and-modify :things {:_id id})
+                         from-db)))))
+
+(defn new-thing-repository []
+  (->ThingRepository nil))
 
 

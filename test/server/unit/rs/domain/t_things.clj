@@ -3,10 +3,12 @@
             [rs.domain.things :as subject]
             [rs.repository.thing-repository :as repo]))
 
-(def stub-domain {:database :database})
+; this shows how to test with a stubbed repo, no mocks needed
 
 (fact "getting a thing delegates to the repository"
-      (subject/thing stub-domain 123) => ..result..
-      (provided
-        (repo/thing :database 123) => ..result..))
+      (let [stub-repo (reify repo/ThingRepositoryProtocol
+                        (thing [this id] (str "thing:" id)))
+            domain (subject/->ThingDomain {:config :none} stub-repo)]
 
+        (subject/thing domain 123)
+        => "thing:123"))

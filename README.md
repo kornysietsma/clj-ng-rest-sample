@@ -10,7 +10,13 @@ my memories of previous projects, but I'm trying to avoid copying anything direc
 client IP, and also as things have generally moved on since the client code was written!
 
 NOTE: this (as of version 0.1.0) uses Stuart Sierra's component library for dependency management
-you probably want to read https://github.com/stuartsierra/component for it to make sense
+you probably want to read https://github.com/stuartsierra/component for it to make sense.
+
+This means the WebServer depends on a ThingDomain, which in turn depends on a ThingRepository
+Both ThingDomain and ThingRepository are based around protocols, so you can substitute an alternative
+for testing.
+
+ThingDomain could be extended to do more than just wrap the single repository, obviously.
 
 ## running stuff
 You need mongodb installed and running on the default port.
