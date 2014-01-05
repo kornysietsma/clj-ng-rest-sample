@@ -1,4 +1,4 @@
-(ns unit.rs.t-repository
+(ns unit.rs.repository.t-thing-repository
   (:require [midje.sweet :refer :all]
             [somnium.congomongo :as m]
             [rs.repository.thing-repository :as subject])
