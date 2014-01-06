@@ -1,9 +1,9 @@
-(ns rs.web
+(ns rs.complex.web
   (:require [compojure.core :refer :all]
             [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.middleware.json :as json]
-            [rs.resources :as resources]
+            [rs.complex.resources :as resources]
             [rs.pages :as pages]
             [ring.adapter.jetty :as jetty]
             [com.stuartsierra.component :as component]))

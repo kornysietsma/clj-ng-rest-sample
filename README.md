@@ -1,6 +1,6 @@
 # clj-ng-rest-sample - a sample clojure restful api + angular app
 
-This is just somewhere for me to dump out the boilerplate I'd currently use if building a new REST api in clojure.
+This is just somewhere for me to dump out the boilerplate I'd currently use if building a new REST api in clojure.  Well, two boilerplates, but more on that later.
 
 It also has an Angular UI - this really should be a separate project, except it's handy to have both things in a
 single project, as it makes testing and deployment simple.
@@ -9,19 +9,29 @@ This is opinionated, and (of course) rushed - there are probably better ways to 
 my memories of previous projects, but I'm trying to avoid copying anything directly from other code, to respect
 client IP, and also as things have generally moved on since the client code was written!
 
-NOTE: this (as of version 0.1.0) uses Stuart Sierra's component library for dependency management
-you probably want to read https://github.com/stuartsierra/component for it to make sense.
+## Complex vs Simple
 
-This means the WebServer depends on a ThingDomain, which in turn depends on a ThingRepository
-Both ThingDomain and ThingRepository are based around protocols, so you can substitute an alternative
-for testing.
+As of 0.2.0 there are two different implementations of the server included:
 
-ThingDomain could be extended to do more than just wrap the single repository, obviously.
+- a simple one, that uses global namespace references and a global database - no DI, no clever logic.  But it's simple.
+You have to test this one with mocks, and if you forget to mock something like the database, the real db will be used.
+
+- a complex one, that uses Stuart Sierra's component library for dependency management - it's probably more extensible,
+and you can test by injecting stub or mock dependencies.  Probably better for bigger apps - but also more complex.
+
+I'm not sure splitting them by package names is the best way to model this, I'm still tinkering.  It has the advantage that
+you can use both in the same test suite, what runs depends whether you kick off the main web app in Jetty, or if
+you start the main system.  It has the disadvantage of making the namespaces more complex.
+
+"Why?" you ask?  Well, having implemented the complex version, I've come to the opinion it's overkill for simple apps - all
+I want in a simple microservice is something that works, and is easy to comprehend.  The simple app fits that bill better.
 
 ## running stuff
 You need mongodb installed and running on the default port.
 
-`lein run` will run on the default port (3000) - open http://localhost:3000 to see the app.
+`lein run` will run the complex app on the default port (3000) - open http://localhost:3000 to see the app.
+
+`lein ring server` will run the simple app, on the same port and URL.
 
 `lein midje` will run all tests
 Note by default this includes the end to end tests.
@@ -33,7 +43,7 @@ and integration:
 
 see the aliases in project.clj to see how these work.
 
-## REPL-based development
+## REPL-based development - for the complex app
 To start a repl `lein repl`
 to load the magic reloading workflow stuff: `(require 'rs.user)`
 to start the system: `(rs.user/go)`

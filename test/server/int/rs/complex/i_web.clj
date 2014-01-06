@@ -1,6 +1,6 @@
-(ns int.rs.i-web
+(ns int.rs.complex.i-web
   (:require [midje.sweet :refer :all]
-            [rs.web :as web]
+            [rs.complex.web :as web]
             [ring.mock.request :as mock]
             [cheshire.core :as cheshire]))
 

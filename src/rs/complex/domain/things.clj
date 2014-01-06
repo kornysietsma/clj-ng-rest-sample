@@ -1,5 +1,5 @@
-(ns rs.domain.things
-  (:require [rs.repository.thing-repository :as repository]))
+(ns rs.complex.domain.things
+  (:require [rs.complex.repository.thing-repository :as repository]))
 
 (defprotocol ThingDomainProtocol
   (things [this] [this query] "all the things")

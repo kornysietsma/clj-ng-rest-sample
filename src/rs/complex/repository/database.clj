@@ -1,4 +1,4 @@
-(ns rs.repository.database
+(ns rs.complex.repository.database
   (:require [somnium.congomongo :as m]
             [com.stuartsierra.component :as component]))
 

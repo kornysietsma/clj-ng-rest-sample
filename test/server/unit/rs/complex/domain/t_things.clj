@@ -1,7 +1,7 @@
-(ns unit.rs.domain.t_things
+(ns unit.rs.complex.domain.t_things
   (:require [midje.sweet :refer :all]
-            [rs.domain.things :as subject]
-            [rs.repository.thing-repository :as repo]))
+            [rs.complex.domain.things :as subject]
+            [rs.complex.repository.thing-repository :as repo]))
 
 ; this shows how to test with a stubbed repo, no mocks needed
 

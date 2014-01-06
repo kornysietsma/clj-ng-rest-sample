@@ -1,4 +1,4 @@
-(defproject clj-ng-rest-sample "0.1.0-SNAPSHOT"
+(defproject clj-ng-rest-sample "0.2.0-SNAPSHOT"
   :description "sample clojure REST api with angular front end"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [midje "1.6.0"]
@@ -13,16 +13,15 @@
                  [clj-webdriver "0.6.0"]
                  [com.stuartsierra/component "0.2.1"]]
 
-  :plugins [; not currently: [lein-ring "0.8.2"]
+  :plugins [[lein-ring "0.8.2"]
             [lein-midje "3.1.1"]
             [lein-haml-sass "0.2.7-SNAPSHOT"]]
 
-  ; lein-ring currently not working - start with rs.system/-main
-  ;:ring {:handler rs.web/app
-  ;       :init rs.web/init
-  ;       :destroy rs.web/destroy }
+  ; "lein ring" runs the simple app
+  :ring { :handler rs.simple.web/app }
 
-  :main rs.system
+  ; "lein run" runs the complex app
+  :main rs.complex.system
 
   :scss {:src "resources/scss"
          :output-directory "resources/public/css"

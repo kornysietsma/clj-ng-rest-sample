@@ -1,7 +1,7 @@
-(ns e2e.end-to-end
+(ns e2e.complex.end-to-end
   (:require [clj-webdriver.taxi :as taxi]
             [midje.sweet :refer :all]
-            [rs.system :as system]
+            [rs.complex.system :as system]
             [ring.adapter.jetty :as jetty]
             [com.stuartsierra.component :as component]))
 

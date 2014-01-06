@@ -1,9 +1,9 @@
-(ns rs.system
+(ns rs.complex.system
   (:require
-    [rs.repository.database :as database]
-    [rs.repository.thing-repository :as thing-repository]
-    [rs.domain.things :as things]
-    [rs.web]
+    [rs.complex.repository.database :as database]
+    [rs.complex.repository.thing-repository :as thing-repository]
+    [rs.complex.domain.things :as things]
+    [rs.complex.web :as web]
     [rs.config :as config]
     [com.stuartsierra.component :as component]))
 
@@ -21,7 +21,7 @@
          {m-host :host m-port :port m-db :db} :mongo} conf]
     (map->RestSystem
       {:webserver (component/using
-                    (rs.web/web-server ws-host ws-port)
+                    (web/web-server ws-host ws-port)
                     [:thing-domain])
        :thing-domain (component/using
                   (things/new-thing-domain conf)

@@ -1,6 +1,6 @@
-(ns rs.resources
+(ns rs.complex.resources
   (:require [liberator.core :refer [defresource]]
-            [rs.domain.things :as things]))
+            [rs.complex.domain.things :as things]))
 
 (defresource healthcheck [domain]
   :available-media-types ["application/json"]

@@ -1,7 +1,8 @@
 # Things I mean to do, in no particular order.
 
 * Bug-like things:
-** fix lein-ring so users can run 'normally' and we can generate war files
+** split the simple and complex apps in a cleaner way - maybe two dev profiles?
+** allow running the complex app with 'lein ring'
 ** fix loading midje tests in the repl - somehow fixing ns reloading broke this.
 * Generic:
 ** more info in the readme

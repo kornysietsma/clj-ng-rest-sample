@@ -1,4 +1,4 @@
-(ns rs.repository.thing-repository
+(ns rs.complex.repository.thing-repository
   (:import (org.bson.types ObjectId))
   (:require [somnium.congomongo :as m]))
 

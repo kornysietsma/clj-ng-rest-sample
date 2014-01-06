@@ -1,6 +1,6 @@
-(ns rs.user
+(ns rs.complex.user
   (:require [rs.config :as config]
-            [rs.system :as system]
+            [rs.complex.system :as system]
             [com.stuartsierra.component :as component]
             [clojure.tools.namespace.repl :refer (refresh)]))
 
