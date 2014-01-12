@@ -16,32 +16,29 @@ As of 0.2.0 there are two different implementations of the server included:
 - a simple one, that uses global namespace references and a global database - no DI, no clever logic.  But it's simple.
 You have to test this one with mocks, and if you forget to mock something like the database, the real db will be used.
 
-- a complex one, that uses Stuart Sierra's component library for dependency management - it's probably more extensible,
-and you can test by injecting stub or mock dependencies.  Probably better for bigger apps - but also more complex.
+- a complex one, that uses Stuart Sierra's component library for dependency management - it's more extensible,
+and you can test cleanly by injecting stub or mock dependencies.  It's a better pattern for bigger apps - but may be overkill if you just want a simple microservice.
 
-I'm not sure splitting them by package names is the best way to model this, I'm still tinkering.  It has the advantage that
-you can use both in the same test suite, what runs depends whether you kick off the main web app in Jetty, or if
-you start the main system.  It has the disadvantage of making the namespaces more complex.
-
-"Why?" you ask?  Well, having implemented the complex version, I've come to the opinion it's overkill for simple apps - all
-I want in a simple microservice is something that works, and is easy to comprehend.  The simple app fits that bill better.
+The choice of simple/complex is managed through Leiningen profiles "simple" and "complex".  The complex version is the default in normal development mode - you can use "with-profile simple" to run against the simple app.  See https://github.com/technomancy/leiningen/blob/stable/doc/PROFILES.md for more on how profiles work.
 
 ## running stuff
 You need mongodb installed and running on the default port.
 
-`lein run` will run the complex app on the default port (3000) - open http://localhost:3000 to see the app.
+`lein complex` will run the complex app on the default port (3000) - open http://localhost:3000 to see the app.
 
-`lein ring server` will run the simple app, on the same port and URL.
+`lein simple` will run the simple app, on the same port and URL.
 
-`lein midje` will run all tests
+`lein midje` will run all tests against the complex project.
 Note by default this includes the end to end tests.
+
+`lein with-profile simple midje` will run all tests against ths simple project.
 
 There are aliases for unit tests:
 `lein unit`
 and integration:
 `lein integration`
 
-see the aliases in project.clj to see how these work.
+see the aliases in project.clj to see how these work.  You can work out how to run the simple versions of these yourself.
 
 ## REPL-based development - for the complex app
 To start a repl `lein repl`
@@ -68,3 +65,4 @@ Hiccup is included for html templating, but not really used - the main page is j
 
 Web side uses the Kraken framework for a relatively lightweight css framework, Angular.js for all the work.
 
+Some of the Angular stuff is based on Angular Seed: https://github.com/angular/angular-seed

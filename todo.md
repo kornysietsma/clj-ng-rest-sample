@@ -1,17 +1,15 @@
 # Things I mean to do, in no particular order.
 
 * Bug-like things:
-** split the simple and complex apps in a cleaner way - maybe two dev profiles?
-** allow running the complex app with 'lein ring'
+** allow running the complex app with 'lein ring' so you can uberjar etc.
 ** fix loading midje tests in the repl - somehow fixing ns reloading broke this.
-* Generic:
-** more info in the readme
+** have a single acceptance test across simple and complex apps
 * Moar angular:
 ** thing detailed view (new route, plus a form?)
 ** new things (post)
 ** edit things (put)
 ** delete things
-** maybe some directives?
+** maybe some directives to show how they work
 * more server side stuff:
 ** logging
 ** better config
